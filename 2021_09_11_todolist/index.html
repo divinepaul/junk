@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Ugly TodoList</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <style>
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+        input {
+            padding: 5px 10px;
+            width: 17.5%;
+        }
+        button {
+            padding: 6px 11px;
+            background:white;
+            box-shadow: 0px 2px 5px  rgba(0,0,0,0.25);
+            border : 1px solid lightblue;
+            border-radius: 3px;
+        }
+        ul {
+            padding: 0;
+            list-style-type: none;
+            transition: 300ms ease;
+        }
+        li {
+            padding: 10px;
+            box-shadow: 0px 5px 5px  rgba(0,0,0,0.25);
+            width: 20%;
+            margin: 10px;
+            border-radius: 3px;
+            border : 1px solid lightblue;
+        }
+        .todo li {
+        }
+        .done li {
+            border : 1px solid lightgreen;
+        }
+        </style>
+    </head>
+    <body>
+        <input type="text" name="todoinput" placeholder="Enter a todo">
+        <button onclick="addTodo()">Add</button><br>
+        <h2>Tasks:</h2>
+        <ul class="todo">
+        </ul>
+        <h2>Done:</h2>
+        <ul class="done">
+        </ul>
+        <script>
+            let todos = []; 
+            let doneItems = [];
+            if( localStorage.getItem("todos")) {
+                todos = localStorage.getItem("todos").split("|");
+                updateTodo();
+            }
+            if( localStorage.getItem("done")) {
+                doneItems = localStorage.getItem("done").split("|");
+                updateFinished();
+            }
+            function updateTodo() {
+                document.querySelector(".todo").innerHTML = "";
+                todos.forEach((todo,i) => {
+                    document.querySelector(".todo").innerHTML += `<li onclick="finishTodo(event)">${todo}</li>`;
+                });
+            }
+            function updateFinished() {
+                document.querySelector(".done").innerHTML = "";
+                doneItems.forEach((todo,i) => {
+                    document.querySelector(".done").innerHTML += `<li onclick="undoDone(event)">${todo}</li>`;
+                });
+            }
+            function addTodo() {
+                let todo = document.querySelector("input").value;
+                if(todo){
+                    todos.push(todo);
+                    localStorage.setItem("todos",todos.join("|"));
+                    updateTodo();
+                    document.querySelector("input").value = "";
+                }
+            }
+            function finishTodo(event) {
+                let item = event.target.innerText;
+                todos =  todos.filter(a => a != item);
+                localStorage.setItem("todos",todos.join("|"));
+                doneItems.push(item);
+                localStorage.setItem("done",doneItems.join("|"));
+                updateTodo();
+                updateFinished();
+            }
+            function undoDone(event) {
+                let item = event.target.innerText;
+                doneItems =  doneItems.filter(a => a != item);
+                localStorage.setItem("done",doneItems.join("|"));
+                todos.push(item);
+                localStorage.setItem("todos",todos.join("|"));
+                updateTodo();
+                updateFinished();
+            }
+        </script>
+    </body>
+</html>

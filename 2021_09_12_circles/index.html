@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Circles. Yes.</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <style>
+    @keyframes rotate {
+          0%   {
+              transform:translate(-50%,-50%) rotate(0deg) ;
+          }
+          100% {
+              transform:translate(-50%,-50%) rotate(360deg) ;
+          }
+    }
+    div {
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+    }
+    </style>
+    <body>
+    <script>
+        function randomColorString() {
+            let r = Math.floor(Math.random() * 255);
+            let g = Math.floor(Math.random() * 255);
+            let b = Math.floor(Math.random() * 255);
+            return `rgba(${r},${g},${b})` 
+        }
+        for(let i=0;i<80;i++) {
+            let circle = document.createElement("div"); 
+            circle.style.height = i*10+"px";
+            circle.style.width  = i*10+"px";
+            circle.style.borderTop = `10px solid ${randomColorString()}`; 
+            circle.style.borderBottom = `10px solid ${randomColorString()}`; 
+            circle.style.borderLeft = `10px solid ${randomColorString()}`; 
+            circle.style.borderRight = `10px solid ${randomColorString()}`; 
+            circle.style.animation = `rotate ${Math.floor(Math.random()*10+1)}s linear infinite`;
+            document.body.appendChild(circle);
+        }
+    </script>
+    </body>
+</html>

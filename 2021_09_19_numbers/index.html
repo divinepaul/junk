@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Help</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{
+    margin:0;
+    white-space:nowrap;
+}
+body,html{
+    height:100%;
+    width:100%;
+}
+</style>
+    </head>
+    <body>
+<script>
+let num = 0;
+let fontSize = 0.5; 
+setInterval(()=>{
+    let p = document.createElement("p");
+    p.innerHTML += ` ${num} &nbsp; ${num.toString(16)} &nbsp; ${num.toString(2)}   <br>`;
+    p.style.fontSize = fontSize + "px"; 
+    document.body.appendChild(p);
+    window.scrollTo(0,document.body.scrollHeight);
+    num++;
+    fontSize += 0.1;
+},-1);
+
+</script>
+    </body>
+</html>

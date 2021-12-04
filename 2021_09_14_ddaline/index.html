@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>DDA Line Algorithm</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <style>
+            * {
+                background: white;
+                font-family:monospace;
+
+            }
+            .screen {
+                display: grid;
+                grid-template-columns: repeat(50,10px);
+                grid-template-rows: repeat(50,10px);
+                grid-gap: 2px;
+            }
+        </style>
+    </head>
+    <body>
+    <h1></h1>
+    <div class="screen"></div>
+    <script>
+        function updateScreen(screen){
+            screen.forEach(row => {
+                row.forEach(div => {
+                   document.querySelector(".screen").appendChild(div);
+                });
+            });
+
+        }
+        function setPixel(screen,x,y){
+                screen[x][y].style.background = "red";
+        }
+        function drawLine(screen,xa,ya,xb,yb){
+            let dx = xb - xa;
+            let dy = yb - ya
+            let steps; 
+            let xIncrment, yIncrment, x = xa, y = ya;
+
+            if(Math.abs((dx)) > Math.abs(dy)) {
+               steps = Math.abs(dx);
+            } else {
+                steps = Math.abs(dy);
+            }
+
+
+            xIncrment = dx / steps;
+            yIncrment = dy / steps;
+
+
+            setPixel(screen,x,y);
+            for (let k=0;k<steps;k++){
+              setTimeout(() => {
+                  x = x + xIncrment;
+                  y = y + yIncrment;
+                  setPixel(screen,Math.round(x),Math.round(y));
+              },100*k);
+            }
+        }
+
+
+        let noPixels = 50;
+        let screen = [];
+        for(let i = 1;i<=noPixels;i++){
+            let row = [];
+            for(let j=1;j<=noPixels;j++){
+                let div = document.createElement("div");
+                div.style.height = "10px";    
+                div.style.width = "10px";        
+                div.style.background = "black";
+                row.push(div);
+            }
+            screen.push(row); 
+        }
+        updateScreen(screen);
+        let xa = Math.floor(Math.random() * noPixels-1); 
+        let ya = Math.floor(Math.random() * noPixels-1); 
+        let xb = Math.floor(Math.random() * noPixels-1); 
+        let yb = Math.floor(Math.random() * noPixels-1); 
+        document.querySelector("h1").innerText = `Line from (${xa},${ya}) to (${xb},${yb})`;
+        drawLine(screen,xa,xb,xb,yb);
+    </script> 
+
+    </body>
+</html>

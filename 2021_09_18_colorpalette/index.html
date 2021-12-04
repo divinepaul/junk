@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Color Picker</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+<style>
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+html,body {
+    height: 100%;
+    width: 100%;
+}
+.main{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.panel {
+    width: 25%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    text-align:center;
+}
+</style>
+    </head>
+    <body>
+        <div class="main">
+            <div class="panel" id="one"></div>
+            <div class="panel" id="two"></div>
+            <div class="panel" id="three"></div>
+            <div class="panel" id="four"></div>
+        </div>
+<script>
+
+    function getHex(n){
+        let hex = n.toString(16);
+        if(hex.length == 1){
+           hex = "0" + hex;  
+           return hex.toUpperCase();
+        } else {
+           return hex.toUpperCase();
+        }
+    }
+
+    function isDark(r,g,b){
+       let lum =  (0.2126*r + 0.7152*g + 0.0722*b)
+        if(lum > 130){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    let panels = ["#one","#two","#three","#four"];
+    panels.forEach(panel=>{
+        let randomr = Math.floor(Math.random() * 255);
+        let randomg = Math.floor(Math.random() * 255); 
+        let randomb = Math.floor(Math.random() * 255);
+        let rgb = `rgb(${randomr},${randomg},${randomb})`;
+        let hexString = `#${getHex(randomr)}${getHex(randomg)}${getHex(randomb)}`;
+        let paneldiv = document.querySelector(panel);
+        paneldiv.innerText = hexString;
+        paneldiv.appendChild(document.createElement("br"));
+        paneldiv.appendChild(document.createElement("br"));
+        paneldiv.appendChild(document.createElement("br"));
+        paneldiv.appendChild(document.createElement("br"));
+        paneldiv.innerText += rgb;
+        paneldiv.style.background = rgb; 
+        if(isDark(randomr,randomg,randomb)) {
+            paneldiv.style.color = "white"; 
+        } else {
+            paneldiv.style.color = "black"; 
+        }
+    });
+
+</script>
+
+</body>
+</html>

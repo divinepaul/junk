@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Follow Mouse</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding:0;
+}
+body,html{
+    height:100%;
+}
+</style>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+    <script>
+        var canvas = document.getElementById("canvas");
+
+        canvas.height = document.body.clientHeight;
+        canvas.width = document.body.clientWidth;
+
+        var c = canvas.getContext("2d");
+        console.log("ey");
+        canvas.addEventListener("mousemove",event => {
+        setTimeout(()=>{ 
+
+            c.lineWidth = 10;
+            c.strokeStyle = '#FF0000';
+            c.fillStyle = '#FF0000';
+            c.beginPath();
+            c.arc(event.offsetX, event.offsetY, 5, 0, 2 * Math.PI, false);
+            c.stroke();
+        },100);
+
+        });
+
+        function animate(){
+            c.fillStyle = 'rgba(0,0,0,0.1)';
+            c.fillRect(0,0,document.body.clientWidth,document.body.clientHeight);
+            requestAnimationFrame(animate);
+
+        }
+        animate();
+    </script>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Gravity</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        html,body {
+            height: 100%;
+            width: 100%;
+        }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+<script>
+    let canvas = document.querySelector("canvas");
+    canvas.height = document.body.clientHeight;
+    canvas.width = document.body.clientWidth;
+    let maxHeight = window.innerHeight;
+    let maxWidth = window.innerWidth;
+
+    let c = canvas.getContext("2d");
+    class Ball {
+        constructor(x,y,radius,acceleration,color) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.xChange = 5;
+            this.yChange = 1;
+            this.acceleration = acceleration;
+            this.color = color;
+        }
+        draw() {
+            c.fillStyle = this.color;
+            c.beginPath();
+            c.arc(this.x, this.y, this.radius, 0, 2 * Math.PI, false);
+            c.fill();
+        }
+        update() {
+            this.draw();
+            if(this.y+this.radius >= maxHeight) {
+                this.yChange = -this.yChange;
+            } else {
+                this.yChange += this.acceleration;
+            }
+
+            if(this.x+this.radius >= maxWidth) {
+                this.xChange = -this.xChange;
+            }
+            if(this.x <= 0+this.radius) {
+                this.xChange = -this.xChange;
+            }
+            this.y += this.yChange;
+            this.x += this.xChange;
+        }
+    }
+    let balls = [];
+    let colors = ["#f72585","#7209b7","#3a0ca3","#4361ee","#4cc9f0"];
+    for(let i =0;i<5;i++){
+        balls.push(new Ball(
+                Math.floor(Math.random()*window.innerWidth+30),
+                Math.floor(Math.random()*window.innerHeight/2),
+                30,1,
+                colors[Math.floor(Math.random()*colors.length)]
+            ));
+    }
+    function animate() {
+        c.fillStyle = 'rgba(0,0,0,0.3)';
+        c.fillRect(0,0,document.body.clientWidth,document.body.clientHeight);
+        balls.forEach(ball => {
+            ball.update();
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Starfield</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <style>
+        * {
+            margin: 0;
+            padding:0;
+        }
+        body,html{
+            height:100%;
+        }
+        </style>
+
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+<script>
+    var canvas = document.getElementById("canvas");
+
+    canvas.height = document.body.clientHeight;
+    canvas.width = document.body.clientWidth;
+
+    let height = window.innerHeight;
+    let width = window.innerWidth;
+
+    let diagonalWidth = Math.sqrt(Math.pow((width/2),2)+Math.pow((height/2),2));
+    let centerX = width/2;
+    let centerY = height/2;
+
+    var c = canvas.getContext("2d");
+    class Point {
+        constructor(color) {
+            this.angle = Math.random() * 2 * Math.PI;
+            this.distance = Math.floor(Math.random()*diagonalWidth);
+            this.x = centerX + (this.distance * Math.cos(this.angle));
+            this.y = centerY + (this.distance * Math.sin(this.angle));
+            this.color = color;
+        }
+        draw(){
+            c.fillStyle = this.color;
+            c.beginPath();
+            c.arc(this.x,this.y, 5, 0, 2 * Math.PI, false);
+            c.fill();
+        }
+        update(){
+            this.angle += 0.01;
+            this.x = centerX + (this.distance * Math.cos(this.angle));
+            this.y = centerY + (this.distance * Math.sin(this.angle));
+        }
+
+    }
+    let points = [];
+    let colors = ["#f72585","#7209b7","#3a0ca3","#4361ee","#4cc9f0"];
+    for(let i =0;i<=800;i++){
+        let point = new Point(colors[Math.floor(Math.random()*colors.length)]);
+        points.push(point);
+    }
+    function animate(){
+        points.forEach(point=>{
+            point.update();
+            point.draw();
+        });
+        c.fillStyle = 'rgba(0,0,0,0.1)';
+        c.fillRect(0,0,document.body.clientWidth,document.body.clientHeight);
+        requestAnimationFrame(animate)
+    }
+    
+    animate();
+</script>
+    </body>
+</html>
