@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>RectRotate</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        html,body {
+            height: 100%;
+            width: 100%;
+            overflow:hidden;
+        }
+        </style>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+<script>
+    let canvas = document.querySelector("canvas");
+    canvas.height = document.body.clientHeight;
+    canvas.width = document.body.clientWidth;
+    console.log(document.body.clientWidth);
+    console.log(window.innerWidth);
+    let maxHeight = window.innerHeight;
+    let maxWidth = window.innerWidth;
+
+    let c = canvas.getContext("2d");
+
+    function animate(){
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+
+</script>
+    </body>
+</html>
